@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Grupo MF Paris – Tabela de Preços</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --azul:#0f2d8a;
+  --azul2:#1a45c8;
+  --vermelho:#c0392b;
+  --bg:#edf1f9;
+  --card:#fff;
+  --borda:#d4daea;
+  --texto:#1b2340;
+  --mudo:#6b7a99;
+  --r:18px;
+  --sombra:0 6px 32px rgba(15,45,138,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+
+/* ── LOGIN ── */
+#login{background:var(--card);border-radius:var(--r);box-shadow:var(--sombra);padding:44px 40px 40px;width:100%;max-width:400px;text-align:center}
+.marca{margin-bottom:28px}
+.marca-nome{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:900;color:var(--azul);letter-spacing:.08em}
+.marca-sub{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:600;color:var(--mudo);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.divisor{width:40px;height:3px;background:var(--azul);border-radius:2px;margin:14px auto 0}
+#login h2{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:400;color:var(--mudo);margin-bottom:22px}
+#login input[type=password]{width:100%;padding:13px 16px;border:2px solid var(--borda);border-radius:10px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--texto);outline:none;transition:border-color .2s;margin-bottom:14px;letter-spacing:3px}
+#login input[type=password]:focus{border-color:var(--azul2)}
+#login button{width:100%;padding:14px;background:var(--azul);color:#fff;border:none;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:background .2s}
+#login button:hover{background:var(--azul2)}
+#erroLogin{color:var(--vermelho);font-size:.85rem;margin-top:10px;display:none}
+
+/* ── APP ── */
+#app{display:none;width:100%;max-width:520px}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sombra);padding:36px 32px 32px}
+.topo{text-align:center;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--borda)}
+.topo .marca-nome{font-size:1.3rem}
+.topo .divisor{margin-top:10px}
+
+/* ── FORM ── */
+.campo{margin-bottom:18px}
+.campo label,.linha-dupla label{display:block;font-size:.73rem;font-weight:700;color:var(--mudo);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.linha-dupla{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+select{width:100%;padding:12px 38px 12px 14px;border:2px solid var(--borda);border-radius:10px;font-size:.95rem;font-family:'Inter',sans-serif;color:var(--texto);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7a99' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 12px center;-webkit-appearance:none;appearance:none;outline:none;cursor:pointer;transition:border-color .2s}
+select:focus{border-color:var(--azul2)}
+
+/* ── RESULTADO ── */
+#resultado{margin-top:22px;display:none}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.caixa{border:2.5px solid var(--azul);border-radius:14px;padding:22px 16px;text-align:center;background:#f6f8ff}
+.caixa.b{border-color:var(--vermelho);background:#fff7f6}
+.caixa .rotulo{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.14em;color:var(--mudo);text-transform:uppercase;margin-bottom:10px}
+.caixa .preco{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;color:var(--texto);line-height:1;margin-bottom:10px}
+.badge{display:inline-block;font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#dde6ff;color:var(--azul);margin-bottom:3px}
+.caixa.b .badge{background:#ffe2df;color:var(--vermelho)}
+.leg{font-size:.72rem;color:var(--mudo)}
+
+.sair{display:block;margin:16px auto 0;background:none;border:none;color:var(--mudo);font-size:.78rem;cursor:pointer;text-decoration:underline}
+.sair:hover{color:var(--vermelho)}
+
+@media(max-width:400px){
+  .card{padding:24px 14px}
+  .linha-dupla{grid-template-columns:1fr}
+  .caixa .preco{font-size:1.6rem}
+  #login{padding:36px 20px 30px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="marca">
+    <div class="marca-nome">GRUPO MF PARIS</div>
+    <div class="marca-sub">Tabela de Preços</div>
+    <div class="divisor"></div>
+  </div>
+  <h2>Acesso Restrito</h2>
+  <input type="password" id="senha" placeholder="Digite a senha" onkeydown="if(event.key==='Enter')entrar()"/>
+  <button onclick="entrar()">Entrar</button>
+  <p id="erroLogin">Senha incorreta. Tente novamente.</p>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="card">
+    <div class="topo">
+      <div class="marca-nome">GRUPO MF PARIS</div>
+      <div class="divisor"></div>
+    </div>
+
+    <div class="campo">
+      <label>Produto</label>
+      <select id="produto" onchange="trocarProduto()">
+        <option value="">Selecione o produto…</option>
+      </select>
+    </div>
+
+    <div class="linha-dupla">
+      <div>
+        <label>Prazo de pagamento</label>
+        <select id="prazo" onchange="calcular()">
+          <option value="">Selecione…</option>
+        </select>
+      </div>
+      <div>
+        <label>Frete</label>
+        <select id="frete" onchange="calcular()">
+          <option value="">Selecione…</option>
+          <option value="FOB">FOB</option>
+          <option value="CIF">CIF</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="resultado">
+      <div class="grade">
+        <div class="caixa a">
+          <div class="rotulo">Tabela A</div>
+          <div class="preco" id="precoA">—</div>
+          <div class="badge" id="comA">—</div>
+          <div class="leg">sua comissão</div>
+        </div>
+        <div class="caixa b">
+          <div class="rotulo">Tabela B</div>
+          <div class="preco" id="precoB">—</div>
+          <div class="badge" id="comB">—</div>
+          <div class="leg">sua comissão</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="sair" onclick="sair()">Sair</button>
+</div>
+
+<script>
+const SENHA = 'gmf2026';
+const DADOS = {"ACHOCOLATADO CHOCOMINAS CESTA 200G":{"comA":3,"comB":2,"prazos":{"À vista":{"FOB":{"A":8.74,"B":8.15},"CIF":{"A":10.57,"B":9.85}},"7":{"FOB":{"A":8.84,"B":8.23},"CIF":{"A":10.69,"B":9.95}},"7/14":{"FOB":{"A":8.88,"B":8.26},"CIF":{"A":10.74,"B":9.99}},"14":{"FOB":{"A":8.92,"B":8.3},"CIF":{"A":10.78,"B":10.03}},"7/14/21":{"FOB":{"A":8.92,"B":8.3},"CIF":{"A":10.78,"B":10.03}},"15":{"FOB":{"A":8.93,"B":8.31},"CIF":{"A":10.8,"B":10.05}},"15/30":{"FOB":{"A":9.01,"B":8.38},"CIF":{"A":10.9,"B":10.13}},"21":{"FOB":{"A":9.0,"B":8.37},"CIF":{"A":10.88,"B":10.12}},"14/21":{"FOB":{"A":8.96,"B":8.33},"CIF":{"A":10.83,"B":10.07}},"14/21/28":{"FOB":{"A":9.0,"B":8.37},"CIF":{"A":10.88,"B":10.12}},"21/28":{"FOB":{"A":9.03,"B":8.4},"CIF":{"A":10.93,"B":10.16}},"21/28/35":{"FOB":{"A":9.07,"B":8.43},"CIF":{"A":10.97,"B":10.2}},"28":{"FOB":{"A":9.07,"B":8.43},"CIF":{"A":10.97,"B":10.2}},"15/30/45":{"FOB":{"A":9.1,"B":8.45},"CIF":{"A":11.0,"B":10.22}},"28/35":{"FOB":{"A":9.12,"B":8.47},"CIF":{"A":11.02,"B":10.24}},"21/28/35/42":{"FOB":{"A":9.12,"B":8.47},"CIF":{"A":11.02,"B":10.24}},"30":{"FOB":{"A":9.1,"B":8.45},"CIF":{"A":11.0,"B":10.22}},"30/35":{"FOB":{"A":9.13,"B":8.48},"CIF":{"A":11.04,"B":10.25}},"28/35/42":{"FOB":{"A":9.16,"B":8.5},"CIF":{"A":11.07,"B":10.28}},"30/35/42":{"FOB":{"A":9.16,"B":8.51},"CIF":{"A":11.08,"B":10.29}},"35":{"FOB":{"A":9.16,"B":8.5},"CIF":{"A":11.07,"B":10.28}},"21/28/35/42/49":{"FOB":{"A":9.16,"B":8.5},"CIF":{"A":11.07,"B":10.28}},"30/45":{"FOB":{"A":9.19,"B":8.53},"CIF":{"A":11.11,"B":10.31}},"35/42":{"FOB":{"A":9.2,"B":8.54},"CIF":{"A":11.12,"B":10.33}},"42":{"FOB":{"A":9.24,"B":8.58},"CIF":{"A":11.17,"B":10.37}},"21/28/35/42/49/56":{"FOB":{"A":9.2,"B":8.54},"CIF":{"A":11.12,"B":10.33}},"45":{"FOB":{"A":9.27,"B":8.61},"CIF":{"A":11.21,"B":10.41}},"30/60":{"FOB":{"A":9.27,"B":8.61},"CIF":{"A":11.21,"B":10.41}},"28/35/42/49":{"FOB":{"A":9.2,"B":8.54},"CIF":{"A":11.12,"B":10.33}},"35/42/49":{"FOB":{"A":9.24,"B":8.58},"CIF":{"A":11.17,"B":10.37}},"49":{"FOB":{"A":9.32,"B":8.65},"CIF":{"A":11.27,"B":10.46}},"42/49/56":{"FOB":{"A":9.32,"B":8.65},"CIF":{"A":11.27,"B":10.46}},"56":{"FOB":{"A":9.41,"B":8.72},"CIF":{"A":11.38,"B":10.55}},"45/60":{"FOB":{"A":9.37,"B":8.68},"CIF":{"A":11.32,"B":10.5}},"60":{"FOB":{"A":9.46,"B":8.76},"CIF":{"A":11.44,"B":10.6}},"21/28/35/42/49/56/63":{"FOB":{"A":9.24,"B":8.58},"CIF":{"A":11.17,"B":10.37}}}},"CAFE VACUO BELVEDER 250G L2002":{"comA":3,"comB":2,"prazos":{"À vista":{"FOB":{"A":18.33,"B":16.82},"CIF":{"A":20.57,"B":18.88}},"7":{"FOB":{"A":18.58,"B":17.03},"CIF":{"A":20.85,"B":19.11}},"7/14":{"FOB":{"A":18.68,"B":17.11},"CIF":{"A":20.96,"B":19.2}},"14":{"FOB":{"A":18.78,"B":17.2},"CIF":{"A":21.07,"B":19.3}},"7/14/21":{"FOB":{"A":18.78,"B":17.2},"CIF":{"A":21.07,"B":19.3}},"15":{"FOB":{"A":18.8,"B":17.22},"CIF":{"A":21.1,"B":19.33}},"15/30":{"FOB":{"A":19.02,"B":17.4},"CIF":{"A":21.35,"B":19.53}},"21":{"FOB":{"A":18.98,"B":17.37},"CIF":{"A":21.3,"B":19.49}},"14/21":{"FOB":{"A":18.88,"B":17.28},"CIF":{"A":21.18,"B":19.39}},"14/21/28":{"FOB":{"A":18.98,"B":17.37},"CIF":{"A":21.3,"B":19.49}},"21/28":{"FOB":{"A":19.08,"B":17.45},"CIF":{"A":21.41,"B":19.59}},"21/28/35":{"FOB":{"A":19.19,"B":17.54},"CIF":{"A":21.53,"B":19.68}},"28":{"FOB":{"A":19.19,"B":17.54},"CIF":{"A":21.53,"B":19.68}},"15/30/45":{"FOB":{"A":19.25,"B":17.59},"CIF":{"A":21.6,"B":19.74}},"28/35":{"FOB":{"A":19.29,"B":17.63},"CIF":{"A":21.65,"B":19.78}},"21/28/35/42":{"FOB":{"A":19.29,"B":17.63},"CIF":{"A":21.65,"B":19.78}},"30":{"FOB":{"A":19.25,"B":17.59},"CIF":{"A":21.6,"B":19.74}},"30/35":{"FOB":{"A":19.32,"B":17.66},"CIF":{"A":21.68,"B":19.81}},"28/35/42":{"FOB":{"A":19.4,"B":17.72},"CIF":{"A":21.77,"B":19.88}},"30/35/42":{"FOB":{"A":19.42,"B":17.74},"CIF":{"A":21.79,"B":19.9}},"35":{"FOB":{"A":19.4,"B":17.72},"CIF":{"A":21.77,"B":19.88}},"21/28/35/42/49":{"FOB":{"A":19.4,"B":17.72},"CIF":{"A":21.77,"B":19.88}},"30/45":{"FOB":{"A":19.48,"B":17.78},"CIF":{"A":21.85,"B":19.96}},"35/42":{"FOB":{"A":19.51,"B":17.81},"CIF":{"A":21.89,"B":19.98}},"42":{"FOB":{"A":19.62,"B":17.9},"CIF":{"A":22.01,"B":20.09}},"21/28/35/42/49/56":{"FOB":{"A":19.51,"B":17.81},"CIF":{"A":21.89,"B":19.98}},"45":{"FOB":{"A":19.71,"B":17.98},"CIF":{"A":22.12,"B":20.17}},"30/60":{"FOB":{"A":19.71,"B":17.98},"CIF":{"A":22.12,"B":20.17}},"28/35/42/49":{"FOB":{"A":19.51,"B":17.81},"CIF":{"A":21.89,"B":19.98}},"35/42/49":{"FOB":{"A":19.62,"B":17.9},"CIF":{"A":22.01,"B":20.09}},"49":{"FOB":{"A":19.84,"B":18.08},"CIF":{"A":22.26,"B":20.29}},"42/49/56":{"FOB":{"A":19.84,"B":18.08},"CIF":{"A":22.26,"B":20.29}},"56":{"FOB":{"A":20.06,"B":18.27},"CIF":{"A":22.51,"B":20.5}},"45/60":{"FOB":{"A":19.95,"B":18.18},"CIF":{"A":22.39,"B":20.4}},"60":{"FOB":{"A":20.2,"B":18.38},"CIF":{"A":22.66,"B":20.63}},"21/28/35/42/49/56/63":{"FOB":{"A":19.62,"B":17.9},"CIF":{"A":22.01,"B":20.09}}}},"CAFE VACUO VILLA RICA TRADICIONAL 500G":{"comA":3,"comB":2,"prazos":{"À vista":{"FOB":{"A":31.28,"B":29.2},"CIF":{"A":33.07,"B":30.87}},"7":{"FOB":{"A":31.62,"B":29.49},"CIF":{"A":33.43,"B":31.18}},"7/14":{"FOB":{"A":31.76,"B":29.61},"CIF":{"A":33.57,"B":31.3}},"14":{"FOB":{"A":31.89,"B":29.73},"CIF":{"A":33.71,"B":31.42}},"7/14/21":{"FOB":{"A":31.89,"B":29.73},"CIF":{"A":33.71,"B":31.42}},"15":{"FOB":{"A":31.93,"B":29.76},"CIF":{"A":33.75,"B":31.46}},"15/30":{"FOB":{"A":32.22,"B":30.02},"CIF":{"A":34.06,"B":31.73}},"21":{"FOB":{"A":32.17,"B":29.96},"CIF":{"A":34.0,"B":31.68}},"14/21":{"FOB":{"A":32.03,"B":29.85},"CIF":{"A":33.86,"B":31.55}},"14/21/28":{"FOB":{"A":32.17,"B":29.96},"CIF":{"A":34.0,"B":31.68}},"21/28":{"FOB":{"A":32.3,"B":30.08},"CIF":{"A":34.15,"B":31.8}},"21/28/35":{"FOB":{"A":32.44,"B":30.21},"CIF":{"A":34.3,"B":31.93}},"28":{"FOB":{"A":32.44,"B":30.21},"CIF":{"A":34.3,"B":31.93}},"15/30/45":{"FOB":{"A":32.52,"B":30.28},"CIF":{"A":34.38,"B":32.0}},"28/35":{"FOB":{"A":32.58,"B":30.33},"CIF":{"A":34.44,"B":32.06}},"21/28/35/42":{"FOB":{"A":32.58,"B":30.33},"CIF":{"A":34.44,"B":32.06}},"30":{"FOB":{"A":32.52,"B":30.28},"CIF":{"A":34.38,"B":32.0}},"30/35":{"FOB":{"A":32.62,"B":30.36},"CIF":{"A":34.49,"B":32.1}},"28/35/42":{"FOB":{"A":32.73,"B":30.45},"CIF":{"A":34.59,"B":32.19}},"30/35/42":{"FOB":{"A":32.75,"B":30.48},"CIF":{"A":34.62,"B":32.22}},"35":{"FOB":{"A":32.73,"B":30.45},"CIF":{"A":34.59,"B":32.19}},"21/28/35/42/49":{"FOB":{"A":32.73,"B":30.45},"CIF":{"A":34.59,"B":32.19}},"30/45":{"FOB":{"A":32.83,"B":30.54},"CIF":{"A":34.7,"B":32.28}},"35/42":{"FOB":{"A":32.87,"B":30.57},"CIF":{"A":34.75,"B":32.32}},"42":{"FOB":{"A":33.01,"B":30.7},"CIF":{"A":34.9,"B":32.45}},"21/28/35/42/49/56":{"FOB":{"A":32.87,"B":30.57},"CIF":{"A":34.75,"B":32.32}},"45":{"FOB":{"A":33.14,"B":30.81},"CIF":{"A":35.03,"B":32.57}},"30/60":{"FOB":{"A":33.14,"B":30.81},"CIF":{"A":35.03,"B":32.57}},"28/35/42/49":{"FOB":{"A":32.87,"B":30.57},"CIF":{"A":34.75,"B":32.32}},"35/42/49":{"FOB":{"A":33.01,"B":30.7},"CIF":{"A":34.9,"B":32.45}},"49":{"FOB":{"A":33.31,"B":30.95},"CIF":{"A":35.21,"B":32.72}},"42/49/56":{"FOB":{"A":33.31,"B":30.95},"CIF":{"A":35.21,"B":32.72}},"56":{"FOB":{"A":33.61,"B":31.21},"CIF":{"A":35.52,"B":32.99}},"45/60":{"FOB":{"A":33.46,"B":31.08},"CIF":{"A":35.36,"B":32.86}},"60":{"FOB":{"A":33.78,"B":31.36},"CIF":{"A":35.71,"B":33.15}},"21/28/35/42/49/56/63":{"FOB":{"A":33.01,"B":30.7},"CIF":{"A":34.9,"B":32.45}}}},"COMPOSTO LACTEO HORIZONTE COM MALTODEXTRINA 200G":{"comA":3,"comB":2,"prazos":{"À vista":{"FOB":{"A":14.93,"B":13.97},"CIF":{"A":16.65,"B":15.58}},"7":{"FOB":{"A":15.09,"B":14.1},"CIF":{"A":16.83,"B":15.73}},"7/14":{"FOB":{"A":15.15,"B":14.16},"CIF":{"A":16.9,"B":15.79}},"14":{"FOB":{"A":15.21,"B":14.21},"CIF":{"A":16.97,"B":15.85}},"7/14/21":{"FOB":{"A":15.21,"B":14.21},"CIF":{"A":16.97,"B":15.85}},"15":{"FOB":{"A":15.23,"B":14.23},"CIF":{"A":16.99,"B":15.87}},"15/30":{"FOB":{"A":15.36,"B":14.34},"CIF":{"A":17.14,"B":16.0}},"21":{"FOB":{"A":15.34,"B":14.32},"CIF":{"A":17.11,"B":15.97}},"14/21":{"FOB":{"A":15.27,"B":14.27},"CIF":{"A":17.04,"B":15.91}},"14/21/28":{"FOB":{"A":15.34,"B":14.32},"CIF":{"A":17.11,"B":15.97}},"21/28":{"FOB":{"A":15.4,"B":14.38},"CIF":{"A":17.18,"B":16.04}},"21/28/35":{"FOB":{"A":15.46,"B":14.43},"CIF":{"A":17.25,"B":16.1}},"28":{"FOB":{"A":15.46,"B":14.43},"CIF":{"A":17.25,"B":16.1}},"15/30/45":{"FOB":{"A":15.5,"B":14.46},"CIF":{"A":17.29,"B":16.13}},"28/35":{"FOB":{"A":15.53,"B":14.49},"CIF":{"A":17.32,"B":16.16}},"21/28/35/42":{"FOB":{"A":15.53,"B":14.49},"CIF":{"A":17.32,"B":16.16}},"30":{"FOB":{"A":15.5,"B":14.46},"CIF":{"A":17.29,"B":16.13}},"30/35":{"FOB":{"A":15.55,"B":14.5},"CIF":{"A":17.34,"B":16.18}},"28/35/42":{"FOB":{"A":15.59,"B":14.55},"CIF":{"A":17.39,"B":16.23}},"30/35/42":{"FOB":{"A":15.61,"B":14.56},"CIF":{"A":17.41,"B":16.24}},"35":{"FOB":{"A":15.59,"B":14.55},"CIF":{"A":17.39,"B":16.23}},"21/28/35/42/49":{"FOB":{"A":15.59,"B":14.55},"CIF":{"A":17.39,"B":16.23}},"30/45":{"FOB":{"A":15.64,"B":14.59},"CIF":{"A":17.45,"B":16.27}},"35/42":{"FOB":{"A":15.66,"B":14.6},"CIF":{"A":17.47,"B":16.29}},"42":{"FOB":{"A":15.73,"B":14.66},"CIF":{"A":17.54,"B":16.35}},"21/28/35/42/49/56":{"FOB":{"A":15.66,"B":14.6},"CIF":{"A":17.47,"B":16.29}},"45":{"FOB":{"A":15.78,"B":14.71},"CIF":{"A":17.61,"B":16.41}},"30/60":{"FOB":{"A":15.78,"B":14.71},"CIF":{"A":17.61,"B":16.41}},"28/35/42/49":{"FOB":{"A":15.66,"B":14.6},"CIF":{"A":17.47,"B":16.29}},"35/42/49":{"FOB":{"A":15.73,"B":14.66},"CIF":{"A":17.54,"B":16.35}},"49":{"FOB":{"A":15.86,"B":14.78},"CIF":{"A":17.69,"B":16.48}},"42/49/56":{"FOB":{"A":15.86,"B":14.78},"CIF":{"A":17.69,"B":16.48}},"56":{"FOB":{"A":16.0,"B":14.9},"CIF":{"A":17.84,"B":16.62}},"45/60":{"FOB":{"A":15.93,"B":14.84},"CIF":{"A":17.77,"B":16.55}},"60":{"FOB":{"A":16.08,"B":14.96},"CIF":{"A":17.93,"B":16.69}},"21/28/35/42/49/56/63":{"FOB":{"A":15.73,"B":14.66},"CIF":{"A":17.54,"B":16.35}}}},"LEITE EM PO INTEGRAL HORIZONTE 200g":{"comA":2,"comB":1,"prazos":{"À vista":{"FOB":{"A":27.96,"B":26.94},"CIF":{"A":29.58,"B":28.5}},"7":{"FOB":{"A":28.23,"B":27.19},"CIF":{"A":29.87,"B":28.77}},"7/14":{"FOB":{"A":28.34,"B":27.29},"CIF":{"A":29.98,"B":28.88}},"14":{"FOB":{"A":28.45,"B":27.39},"CIF":{"A":30.1,"B":28.98}},"7/14/21":{"FOB":{"A":28.45,"B":27.39},"CIF":{"A":30.1,"B":28.98}},"15":{"FOB":{"A":28.48,"B":27.42},"CIF":{"A":30.13,"B":29.01}},"15/30":{"FOB":{"A":28.72,"B":27.64},"CIF":{"A":30.38,"B":29.25}},"21":{"FOB":{"A":28.67,"B":27.6},"CIF":{"A":30.33,"B":29.2}},"14/21":{"FOB":{"A":28.56,"B":27.5},"CIF":{"A":30.21,"B":29.09}},"14/21/28":{"FOB":{"A":28.67,"B":27.6},"CIF":{"A":30.33,"B":29.2}},"21/28":{"FOB":{"A":28.78,"B":27.7},"CIF":{"A":30.45,"B":29.31}},"21/28/35":{"FOB":{"A":28.89,"B":27.81},"CIF":{"A":30.57,"B":29.42}},"28":{"FOB":{"A":28.89,"B":27.81},"CIF":{"A":30.57,"B":29.42}},"15/30/45":{"FOB":{"A":28.96,"B":27.87},"CIF":{"A":30.64,"B":29.48}},"28/35":{"FOB":{"A":29.01,"B":27.91},"CIF":{"A":30.69,"B":29.53}},"21/28/35/42":{"FOB":{"A":29.01,"B":27.91},"CIF":{"A":30.69,"B":29.53}},"30":{"FOB":{"A":28.96,"B":27.87},"CIF":{"A":30.64,"B":29.48}},"30/35":{"FOB":{"A":29.04,"B":27.94},"CIF":{"A":30.72,"B":29.56}},"28/35/42":{"FOB":{"A":29.12,"B":28.02},"CIF":{"A":30.81,"B":29.64}},"30/35/42":{"FOB":{"A":29.14,"B":28.04},"CIF":{"A":30.83,"B":29.66}},"35":{"FOB":{"A":29.12,"B":28.02},"CIF":{"A":30.81,"B":29.64}},"21/28/35/42/49":{"FOB":{"A":29.12,"B":28.02},"CIF":{"A":30.81,"B":29.64}},"30/45":{"FOB":{"A":29.2,"B":28.09},"CIF":{"A":30.9,"B":29.72}},"35/42":{"FOB":{"A":29.24,"B":28.12},"CIF":{"A":30.93,"B":29.75}},"42":{"FOB":{"A":29.35,"B":28.23},"CIF":{"A":31.05,"B":29.87}},"21/28/35/42/49/56":{"FOB":{"A":29.24,"B":28.12},"CIF":{"A":30.93,"B":29.75}},"45":{"FOB":{"A":29.45,"B":28.32},"CIF":{"A":31.16,"B":29.97}},"30/60":{"FOB":{"A":29.45,"B":28.32},"CIF":{"A":31.16,"B":29.97}},"28/35/42/49":{"FOB":{"A":29.24,"B":28.12},"CIF":{"A":30.93,"B":29.75}},"35/42/49":{"FOB":{"A":29.35,"B":28.23},"CIF":{"A":31.05,"B":29.87}},"49":{"FOB":{"A":29.59,"B":28.45},"CIF":{"A":31.3,"B":30.1}},"42/49/56":{"FOB":{"A":29.59,"B":28.45},"CIF":{"A":31.3,"B":30.1}},"56":{"FOB":{"A":29.83,"B":28.67},"CIF":{"A":31.56,"B":30.33}},"45/60":{"FOB":{"A":29.71,"B":28.56},"CIF":{"A":31.43,"B":30.21}},"60":{"FOB":{"A":29.96,"B":28.8},"CIF":{"A":31.7,"B":30.47}},"21/28/35/42/49/56/63":{"FOB":{"A":29.35,"B":28.23},"CIF":{"A":31.05,"B":29.87}}}},"OKEY LAC ACAI 1 KG":{"comA":3,"comB":2,"prazos":{"À vista":{"FOB":{"A":17.24,"B":16.13},"CIF":{"A":18.96,"B":17.74}},"7":{"FOB":{"A":17.42,"B":16.29},"CIF":{"A":19.16,"B":17.91}},"7/14":{"FOB":{"A":17.49,"B":16.35},"CIF":{"A":19.24,"B":17.98}},"14":{"FOB":{"A":17.56,"B":16.41},"CIF":{"A":19.32,"B":18.05}},"7/14/21":{"FOB":{"A":17.56,"B":16.41},"CIF":{"A":19.32,"B":18.05}},"15":{"FOB":{"A":17.58,"B":16.43},"CIF":{"A":19.34,"B":18.07}},"15/30":{"FOB":{"A":17.74,"B":16.56},"CIF":{"A":19.51,"B":18.22}},"21":{"FOB":{"A":17.71,"B":16.54},"CIF":{"A":19.48,"B":18.19}},"14/21":{"FOB":{"A":17.64,"B":16.47},"CIF":{"A":19.4,"B":18.12}},"14/21/28":{"FOB":{"A":17.71,"B":16.54},"CIF":{"A":19.48,"B":18.19}},"21/28":{"FOB":{"A":17.78,"B":16.6},"CIF":{"A":19.56,"B":18.26}},"21/28/35":{"FOB":{"A":17.86,"B":16.67},"CIF":{"A":19.64,"B":18.33}},"28":{"FOB":{"A":17.86,"B":16.67},"CIF":{"A":19.64,"B":18.33}},"15/30/45":{"FOB":{"A":17.9,"B":16.7},"CIF":{"A":19.69,"B":18.37}},"28/35":{"FOB":{"A":17.93,"B":16.73},"CIF":{"A":19.72,"B":18.4}},"21/28/35/42":{"FOB":{"A":17.93,"B":16.73},"CIF":{"A":19.72,"B":18.4}},"30":{"FOB":{"A":17.9,"B":16.7},"CIF":{"A":19.69,"B":18.37}},"30/35":{"FOB":{"A":17.95,"B":16.75},"CIF":{"A":19.75,"B":18.42}},"28/35/42":{"FOB":{"A":18.01,"B":16.8},"CIF":{"A":19.81,"B":18.48}},"30/35/42":{"FOB":{"A":18.02,"B":16.81},"CIF":{"A":19.82,"B":18.49}},"35":{"FOB":{"A":18.01,"B":16.8},"CIF":{"A":19.81,"B":18.48}},"21/28/35/42/49":{"FOB":{"A":18.01,"B":16.8},"CIF":{"A":19.81,"B":18.48}},"30/45":{"FOB":{"A":18.06,"B":16.84},"CIF":{"A":19.87,"B":18.53}},"35/42":{"FOB":{"A":18.08,"B":16.86},"CIF":{"A":19.89,"B":18.55}},"42":{"FOB":{"A":18.16,"B":16.93},"CIF":{"A":19.97,"B":18.62}},"21/28/35/42/49/56":{"FOB":{"A":18.08,"B":16.86},"CIF":{"A":19.89,"B":18.55}},"45":{"FOB":{"A":18.22,"B":16.99},"CIF":{"A":20.05,"B":18.69}},"30/60":{"FOB":{"A":18.22,"B":16.99},"CIF":{"A":20.05,"B":18.69}},"28/35/42/49":{"FOB":{"A":18.08,"B":16.86},"CIF":{"A":19.89,"B":18.55}},"35/42/49":{"FOB":{"A":18.16,"B":16.93},"CIF":{"A":19.97,"B":18.62}},"49":{"FOB":{"A":18.31,"B":17.06},"CIF":{"A":20.15,"B":18.77}},"42/49/56":{"FOB":{"A":18.31,"B":17.06},"CIF":{"A":20.15,"B":18.77}},"56":{"FOB":{"A":18.47,"B":17.2},"CIF":{"A":20.32,"B":18.92}},"45/60":{"FOB":{"A":18.39,"B":17.13},"CIF":{"A":20.23,"B":18.85}},"60":{"FOB":{"A":18.56,"B":17.28},"CIF":{"A":20.42,"B":19.01}},"21/28/35/42/49/56/63":{"FOB":{"A":18.16,"B":16.93},"CIF":{"A":19.97,"B":18.62}}}},"OKEY LAC PANIFICACAO 1KG":{"comA":3,"comB":2,"prazos":{"À vista":{"FOB":{"A":14.82,"B":13.86},"CIF":{"A":16.54,"B":15.47}},"7":{"FOB":{"A":14.97,"B":13.99},"CIF":{"A":16.71,"B":15.62}},"7/14":{"FOB":{"A":15.03,"B":14.05},"CIF":{"A":16.78,"B":15.68}},"14":{"FOB":{"A":15.09,"B":14.1},"CIF":{"A":16.85,"B":15.74}},"7/14/21":{"FOB":{"A":15.09,"B":14.1},"CIF":{"A":16.85,"B":15.74}},"15":{"FOB":{"A":15.11,"B":14.12},"CIF":{"A":16.87,"B":15.76}},"15/30":{"FOB":{"A":15.24,"B":14.23},"CIF":{"A":17.02,"B":15.89}},"21":{"FOB":{"A":15.22,"B":14.21},"CIF":{"A":16.99,"B":15.86}},"14/21":{"FOB":{"A":15.15,"B":14.16},"CIF":{"A":16.92,"B":15.8}},"14/21/28":{"FOB":{"A":15.22,"B":14.21},"CIF":{"A":16.99,"B":15.86}},"21/28":{"FOB":{"A":15.28,"B":14.27},"CIF":{"A":17.06,"B":15.93}},"21/28/35":{"FOB":{"A":15.34,"B":14.32},"CIF":{"A":17.13,"B":15.99}},"28":{"FOB":{"A":15.34,"B":14.32},"CIF":{"A":17.13,"B":15.99}},"15/30/45":{"FOB":{"A":15.38,"B":14.35},"CIF":{"A":17.17,"B":16.02}},"28/35":{"FOB":{"A":15.41,"B":14.38},"CIF":{"A":17.2,"B":16.05}},"21/28/35/42":{"FOB":{"A":15.41,"B":14.38},"CIF":{"A":17.2,"B":16.05}},"30":{"FOB":{"A":15.38,"B":14.35},"CIF":{"A":17.17,"B":16.02}},"30/35":{"FOB":{"A":15.43,"B":14.39},"CIF":{"A":17.22,"B":16.07}},"28/35/42":{"FOB":{"A":15.47,"B":14.43},"CIF":{"A":17.27,"B":16.11}},"30/35/42":{"FOB":{"A":15.49,"B":14.44},"CIF":{"A":17.29,"B":16.13}},"35":{"FOB":{"A":15.47,"B":14.43},"CIF":{"A":17.27,"B":16.11}},"21/28/35/42/49":{"FOB":{"A":15.47,"B":14.43},"CIF":{"A":17.27,"B":16.11}},"30/45":{"FOB":{"A":15.52,"B":14.47},"CIF":{"A":17.33,"B":16.16}},"35/42":{"FOB":{"A":15.54,"B":14.49},"CIF":{"A":17.35,"B":16.18}},"42":{"FOB":{"A":15.6,"B":14.55},"CIF":{"A":17.42,"B":16.24}},"21/28/35/42/49/56":{"FOB":{"A":15.54,"B":14.49},"CIF":{"A":17.35,"B":16.18}},"45":{"FOB":{"A":15.66,"B":14.6},"CIF":{"A":17.48,"B":16.3}},"30/60":{"FOB":{"A":15.66,"B":14.6},"CIF":{"A":17.48,"B":16.3}},"28/35/42/49":{"FOB":{"A":15.54,"B":14.49},"CIF":{"A":17.35,"B":16.18}},"35/42/49":{"FOB":{"A":15.6,"B":14.55},"CIF":{"A":17.42,"B":16.24}},"49":{"FOB":{"A":15.74,"B":14.66},"CIF":{"A":17.57,"B":16.37}},"42/49/56":{"FOB":{"A":15.74,"B":14.66},"CIF":{"A":17.57,"B":16.37}},"56":{"FOB":{"A":15.87,"B":14.78},"CIF":{"A":17.72,"B":16.5}},"45/60":{"FOB":{"A":15.81,"B":14.72},"CIF":{"A":17.64,"B":16.44}},"60":{"FOB":{"A":15.95,"B":14.85},"CIF":{"A":17.81,"B":16.58}},"21/28/35/42/49/56/63":{"FOB":{"A":15.6,"B":14.55},"CIF":{"A":17.42,"B":16.24}}}}};
+
+function entrar(){
+  if(document.getElementById('senha').value===SENHA){
+    document.getElementById('login').style.display='none';
+    document.getElementById('app').style.display='block';
+    iniciar();
+  } else {
+    document.getElementById('erroLogin').style.display='block';
+    document.getElementById('senha').value='';
+  }
+}
+
+function sair(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('login').style.display='block';
+  document.getElementById('senha').value='';
+  document.getElementById('erroLogin').style.display='none';
+}
+
+function iniciar(){
+  const sel=document.getElementById('produto');
+  Object.keys(DADOS).forEach(p=>{
+    const o=document.createElement('option');
+    o.value=p; o.textContent=p;
+    sel.appendChild(o);
+  });
+}
+
+function trocarProduto(){
+  const p=document.getElementById('produto').value;
+  const sel=document.getElementById('prazo');
+  sel.innerHTML='<option value="">Selecione…</option>';
+  if(!p) return;
+  Object.keys(DADOS[p].prazos).forEach(pr=>{
+    const o=document.createElement('option');
+    o.value=pr; o.textContent=pr;
+    sel.appendChild(o);
+  });
+  calcular();
+}
+
+function fmt(n){ return 'R$ '+n.toFixed(2).replace('.',','); }
+
+function calcular(){
+  const p  = document.getElementById('produto').value;
+  const pr = document.getElementById('prazo').value;
+  const fr = document.getElementById('frete').value;
+  const res= document.getElementById('resultado');
+  if(!p||!pr||!fr){res.style.display='none';return;}
+  const linha=DADOS[p]?.prazos[pr]?.[fr];
+  if(!linha){res.style.display='none';return;}
+  document.getElementById('precoA').textContent=fmt(linha.A);
+  document.getElementById('precoB').textContent=fmt(linha.B);
+  document.getElementById('comA').textContent=DADOS[p].comA+'%';
+  document.getElementById('comB').textContent=DADOS[p].comB+'%';
+  res.style.display='block';
+}
+</script>
+</body>
+</html>
